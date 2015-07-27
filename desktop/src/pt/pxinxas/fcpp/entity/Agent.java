@@ -10,6 +10,7 @@ import pt.pxinxas.fcpp.input.Input;
 import pt.pxinxas.fcpp.input.InputController;
 import pt.pxinxas.fcpp.manager.WorldManager;
 import pt.pxinxas.fcpp.raycast.RayCaster;
+import pt.pxinxas.fcpp.system.CollisionAxis;
 import pt.pxinxas.fcpp.util.Point;
 import pt.pxinxas.fcpp.util.SpatialHashMap;
 import pt.pxinxas.fcpp.util.Vector;
@@ -36,6 +37,8 @@ public class Agent extends Player {
 	private float neSensorDistance;
 	private float nwSensorDistance;
 	private float timer;
+
+	private int blockCollision;
 
 	public Agent() {
 		WorldManager.getInstance().addWorldObject(this);
@@ -123,6 +126,14 @@ public class Agent extends Player {
 	protected InputController getInputController() {
 		return new ClientPlayerInputController();
 	}
+	
+	@Override
+	public void collideWithEntity(Entity ent, float delta, CollisionAxis axis) {
+		super.collideWithEntity(ent, delta, axis);
+		if (ent instanceof Block) {
+			blockCollision++;
+		}
+	}
 
 	/**
 	 * @return the genome
@@ -163,6 +174,14 @@ public class Agent extends Player {
 	 */
 	public float getTimer() {
 		return timer;
+	}
+
+	public int getBlockCollision() {
+		return blockCollision;
+	}
+
+	public void setBlockCollision(int blockCollision) {
+		this.blockCollision = blockCollision;
 	}
 
 }

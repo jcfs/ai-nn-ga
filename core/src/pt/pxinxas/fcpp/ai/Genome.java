@@ -42,6 +42,11 @@ public class Genome implements Comparable<Genome> {
 		return new Genome(this.fitness, this.genes, mutate);
 	}
 
+	/**
+	 * Mutates the genome according to the given rate
+	 * 
+	 * @param rate
+	 */
 	public void mutate(float rate) {
 		for (int i = 0; i < genes.length; i++) {
 			if (RandomUtil.nextFloat() < rate) {

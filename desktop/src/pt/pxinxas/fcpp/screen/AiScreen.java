@@ -103,26 +103,17 @@ public class AiScreen implements Screen {
 			if (done == POPULATION_SIZE || generationTimer > TTL) {
 				done = 0;
 				generationTimer = 0;
-				float maxFit = Integer.MIN_VALUE;
 
-				Agent fittest = null;
 				for (Agent agent : activePopulation) {
 					Vector position = agent.getPosition();
-
 					double targetDistance = -(position.getDistance((float) targetPoint.x - (float) position.x, (float) targetPoint.y
 							- (float) position.y));
-					float fitness = (float) targetDistance * 1f;
-					agent.getGenome().setFitness(fitness * 0.99f - agent.getTimer() * 0.01f);
-
-					if (fitness > maxFit) {
-						maxFit = fitness;
-						fittest = agent;
-					}
-
+					float fitness = (float) targetDistance * 0.99f - agent.getTimer() * 0.01f;
+					agent.getGenome().setFitness(fitness - agent.getBlockCollision());
 					agent.remove();
 				}
 
-				System.out.println(fittest);
+				System.out.println(geneticAlgorithm.getFittest());
 				geneticAlgorithm.breed();
 				activePopulation.clear();
 				populationAlive = false;
