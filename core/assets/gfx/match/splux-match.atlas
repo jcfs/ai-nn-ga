@@ -1,0 +1,41 @@
+
+splux-match.png
+size: 512,64
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+nova-blue-animation
+  rotate: false
+  xy: 104, 18
+  size: 88, 32
+  orig: 88, 32
+  offset: 0, 0
+  index: -1
+nova-green-animation
+  rotate: false
+  xy: 194, 18
+  size: 88, 32
+  orig: 88, 32
+  offset: 0, 0
+  index: -1
+nova-now
+  rotate: false
+  xy: 2, 2
+  size: 100, 48
+  orig: 100, 48
+  offset: 0, 0
+  index: -1
+nova-red-animation
+  rotate: false
+  xy: 284, 18
+  size: 88, 32
+  orig: 88, 32
+  offset: 0, 0
+  index: -1
+nova-yellow-animation
+  rotate: false
+  xy: 374, 18
+  size: 88, 32
+  orig: 88, 32
+  offset: 0, 0
+  index: -1

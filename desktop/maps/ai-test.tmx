@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" nextobjectid="1">
+ <tileset firstgid="1" name="intrest-point-tiles" tilewidth="32" tileheight="32">
+  <image source="intrest-point-tiles.png" width="96" height="32"/>
+  <tile id="1">
+   <properties>
+    <property name="spawn" value="1"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="target" value="1"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="4" name="wall" tilewidth="32" tileheight="32">
+  <image source="wall.png" width="256" height="64"/>
+  <tile id="0">
+   <properties>
+    <property name="col" value="1"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="collision" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt1uEOgiAUBlBM3/+ZW/+IWQGz3Ss7Z/s2HVHql2gpAABA7ZDTRHn99iZv0UeuRPch91mvosev/t5v8/Qx10fvnPZzPceSsY9H6T+nf++31+nX+MhYm72aE2X0/5ntfhm9B3o61sdcHzPPiE/jR7MdJfo9JmuizDxPV48+ciW6D8mzXgEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABregKlnAey
+  </data>
+ </layer>
+ <layer name="Copia de collision" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt1uEOgiAUBlBM3/+ZW/+IWQGz3Ss7Z/s2HVHql2gpAABA7ZDTRHn99iZv0UeuRPch91mvosev/t5v8/Qx10fvnPZzPceSsY9H6T+nf++31+nX+MhYm72aE2X0/5ntfhm9B3o61sdcHzPPiE/jR7MdJfo9JmuizDxPV48+ciW6D8mzXgEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABregKlnAey
+  </data>
+ </layer>
+ <layer name="Camade de Tiles 3" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T+1lC6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAbnEAAAQ==
+  </data>
+ </layer>
+</map>

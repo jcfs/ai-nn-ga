@@ -1,0 +1,22 @@
+<maps>
+  <map id="-1">
+    <name>AI MAP</name>
+    <tmx>ai.tmx</tmx>
+    <thumbnail>round4.png</thumbnail>
+  </map>
+  <map id="1">
+    <name>Death Fortress IV</name>
+    <tmx>round4.tmx</tmx>
+    <thumbnail>round4.png</thumbnail>
+  </map>
+  <map id="2">
+    <name>Death Fortress II - simple</name>
+    <tmx>round2.tmx</tmx>
+    <thumbnail>round2.png</thumbnail>
+  </map>
+  <map id="3">
+    <name>Test map</name>
+    <tmx>round3.tmx</tmx>
+    <thumbnail>round3.png</thumbnail>
+  </map>
+</maps>
