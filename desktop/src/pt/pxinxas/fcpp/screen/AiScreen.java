@@ -20,24 +20,24 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
 
-public class AiClientMatchScreen implements Screen {
+public class AiScreen implements Screen {
 
-	private static final int POPULATION_SIZE = 30;
-	private static final float TTL = 10000;
+	private static final int POPULATION_SIZE = 20;
+	private static final float TTL = 10000; // 10 seconds TTL
 
-	float deltaTime = 1f / 60f * 1000;
-	double currentTime = System.currentTimeMillis();
-	float accumulator = 0.0f;
-	float timer = 0;
-	boolean populationAlive = false;
-	int done;
+	private final float deltaTime = 1f / 60f * 1000;
+	private double currentTime = System.currentTimeMillis();
+	private float accumulator = 0.0f;
+	private boolean populationAlive = false;
+	private int done;
 
 	private final GeneticAlgorithm geneticAlgorithm = new GeneticAlgorithm(POPULATION_SIZE, 704);
 	private final List<Agent> activePopulation = new ArrayList<Agent>();
-	private Point targetPoint;
-	private Point spawnPoint;
+	private float generationTimer = 0;
 
-	public AiClientMatchScreen() {
+	private Point targetPoint;
+
+	public AiScreen() {
 	}
 
 	/**
@@ -49,7 +49,6 @@ public class AiClientMatchScreen implements Screen {
 	public void show() {
 		ClientMapManager.getInstance().loadMap(-1);
 		targetPoint = ClientGameStaticContext.getInstance().getTargetPoint();
-		spawnPoint = ClientGameStaticContext.getInstance().getSpawnPoint();
 	}
 
 	/**
@@ -65,16 +64,9 @@ public class AiClientMatchScreen implements Screen {
 
 		SpriteBatchManager.getInstance().getBatch().setProjectionMatrix(CameraManager.getInstance().getActiveCamera().combined);
 		SpriteBatchManager.getInstance().getBatch().begin();
-
 		ClientMapManager.getInstance().renderBottomLayer();
 		WorldManager.getInstance().render(delta);
 		SpriteBatchManager.getInstance().getBatch().end();
-
-		SpriteBatchManager.getInstance().getBatch().setProjectionMatrix(CameraManager.getInstance().getActiveCamera().combined);
-		SpriteBatchManager.getInstance().getBatch().begin();
-		ClientMapManager.getInstance().renderTopLayer();
-		SpriteBatchManager.getInstance().getBatch().end();
-
 	}
 
 	/**
@@ -106,12 +98,13 @@ public class AiClientMatchScreen implements Screen {
 		ClientMapManager.getInstance().update(millisecondsDelta);
 
 		if (populationAlive) {
-			timer += millisecondsDelta;
+			generationTimer += millisecondsDelta;
 
-			if (done == POPULATION_SIZE || timer > TTL) {
+			if (done == POPULATION_SIZE || generationTimer > TTL) {
 				done = 0;
-				timer = 0;
-				float maxFit = -100000;
+				generationTimer = 0;
+				float maxFit = Integer.MIN_VALUE;
+
 				Agent fittest = null;
 				for (Agent agent : activePopulation) {
 					Vector position = agent.getPosition();
@@ -137,22 +130,25 @@ public class AiClientMatchScreen implements Screen {
 				for (Agent agent : activePopulation) {
 					if (agent.isStuck() && agent.getStatus() != Status.DONE) {
 						agent.setStatus(Status.DONE);
-						agent.setTimeToStuck(timer);
-						done++;
+						agent.setTimeToStuck(generationTimer);
+						this.done++;
 					}
 				}
 			}
 		}
 	}
 
+	/**
+	 * Generates a new population of agents
+	 */
 	private void generateNewPopulation() {
 		List<Genome> population = geneticAlgorithm.getPopulation();
 
-		activePopulation.clear();
-		done = 0;
+		this.activePopulation.clear();
+		this.done = 0;
 		for (Genome genome : population) {
 			genome.setFitness(0);
-			activePopulation.add(new Agent(PlayerTeam.RED, null, genome));
+			this.activePopulation.add(new Agent(PlayerTeam.RED, null, genome));
 		}
 		System.out.println("New generation " + geneticAlgorithm.getGeneration() + " " + population.size() + "  " + done);
 		populationAlive = true;

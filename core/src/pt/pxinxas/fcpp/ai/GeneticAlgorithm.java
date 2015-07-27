@@ -6,6 +6,9 @@ import java.util.List;
 
 import pt.pxinxas.fcpp.util.RandomUtil;
 
+/**
+ * @author jcfs
+ */
 public class GeneticAlgorithm {
 
 	private List<Genome> population;
@@ -22,7 +25,6 @@ public class GeneticAlgorithm {
 		for (int i = 0; i < populationSize; i++) {
 			this.population.add(new Genome(numberOfCromossomes));
 		}
-		
 	}
 
 	public GeneticAlgorithm(int populationSize, List<Float> cromossomes) {

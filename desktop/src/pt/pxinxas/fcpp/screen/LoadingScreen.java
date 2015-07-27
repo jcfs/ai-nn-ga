@@ -22,7 +22,7 @@ public class LoadingScreen implements Screen {
 		float progress = MatchAssetManager.getInstance().getProgress();
 
 		if (progress == 1) {
-			((Game) Gdx.app.getApplicationListener()).setScreen(new AiClientMatchScreen());
+			((Game) Gdx.app.getApplicationListener()).setScreen(new AiScreen());
 		}
 
 	}
