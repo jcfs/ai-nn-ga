@@ -3,7 +3,7 @@ apply plugin: "java"
 sourceCompatibility = 1.7
 sourceSets.main.java.srcDirs = [ "src/" ]
 
-project.ext.mainClassName = "pt.pxinxas.fcpp.desktop.DesktopLauncher"
+project.ext.mainClassName = "pt.pxinxas.fcpp.desktop.Main"
 project.ext.assetsDir = new File("../core/assets");
 
 task run(dependsOn: classes, type: JavaExec) {
