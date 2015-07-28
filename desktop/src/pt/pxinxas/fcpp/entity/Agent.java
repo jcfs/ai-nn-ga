@@ -3,6 +3,7 @@ package pt.pxinxas.fcpp.entity;
 import java.util.List;
 
 import pt.pxinxas.fcpp.ai.Genome;
+import pt.pxinxas.fcpp.ai.GenomeAware;
 import pt.pxinxas.fcpp.ai.NeuralNetwork;
 import pt.pxinxas.fcpp.game.ClientGameStaticContext;
 import pt.pxinxas.fcpp.input.ClientPlayerInputController;
@@ -15,11 +16,11 @@ import pt.pxinxas.fcpp.util.Point;
 import pt.pxinxas.fcpp.util.SpatialHashMap;
 import pt.pxinxas.fcpp.util.Vector;
 
-public class Agent extends Player {
+public class Agent extends Player implements GenomeAware {
 
 	private Float targetAngle;
 
-	private final NeuralNetwork network = new NeuralNetwork(9, 4, 1, 50);
+	private final NeuralNetwork network = new NeuralNetwork(10, 5, 1, 40);
 
 	private Input input = new Input();
 	private Genome genome;
@@ -51,6 +52,7 @@ public class Agent extends Player {
 		WorldManager.getInstance().addWorldObject(this);
 		this.setPosition(new Vector(ClientGameStaticContext.getInstance().getSpawnPoint().x, ClientGameStaticContext.getInstance().getSpawnPoint().y));
 		this.network.importWeights(genome.getGenes());
+		
 	}
 
 	@Override
@@ -62,6 +64,8 @@ public class Agent extends Player {
 		// Update sensors information
 		Point point = new Point(this.getPosition().x, this.getPosition().y);
 		Vector direction = new Vector(1, 0);
+		direction = direction.rotate(this.getRotation());
+		
 		Point rightSensor = RayCaster.getInstance().castRay(point, direction, 800, spatialMap);
 		direction = direction.rotate(-45);
 		Point seSensor = RayCaster.getInstance().castRay(point, direction, 800, spatialMap);
@@ -92,7 +96,7 @@ public class Agent extends Player {
 		nwSensorDistance = (float) nwSensor.distance(point);
 
 		// input the sensor information to the network
-		List<Float> outputs = network.update(rightSensorDistance, leftSensorDistance, topSensorDistance, downSensorDistance, seSensorDistance,
+		List<Float> outputs = network.update((float)this.getRotation(), rightSensorDistance, leftSensorDistance, topSensorDistance, downSensorDistance, seSensorDistance,
 				swSensorDistance, neSensorDistance, nwSensorDistance, targetAngle);
 
 		input = new Input(outputs);

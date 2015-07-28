@@ -13,28 +13,28 @@ public class GeneticAlgorithm {
 
 	private List<Genome> population;
 	private final int populationSize;
-	private final int numberOfCromossomes;
+	private final int numberOfGenes;
 	private int generation;
 
-	public GeneticAlgorithm(int populationSize, int numberOfCromossomes) {
-		this.numberOfCromossomes = numberOfCromossomes;
+	public GeneticAlgorithm(int populationSize, int numberOfGenes) {
+		this.numberOfGenes = numberOfGenes;
 		this.generation = 0;
 		this.populationSize = populationSize;
 		this.population = new ArrayList<Genome>(populationSize);
 
 		for (int i = 0; i < populationSize; i++) {
-			this.population.add(new Genome(numberOfCromossomes));
+			this.population.add(new Genome(numberOfGenes));
 		}
 	}
 
-	public GeneticAlgorithm(int populationSize, List<Float> cromossomes) {
-		this.numberOfCromossomes = cromossomes.size();
+	public GeneticAlgorithm(int populationSize, List<Float> genes) {
+		this.numberOfGenes = genes.size();
 		this.generation = 0;
 		this.populationSize = populationSize;
 		this.population = new ArrayList<Genome>(populationSize);
 
 		for (int i = 0; i < populationSize; i++) {
-			this.population.add(new Genome(numberOfCromossomes, cromossomes.toArray(new Float[cromossomes.size()])));
+			this.population.add(new Genome(numberOfGenes, genes.toArray(new Float[genes.size()])));
 		}
 	}
 
@@ -65,17 +65,17 @@ public class GeneticAlgorithm {
 	}
 
 	private Genome crossOver(Genome father, Genome mother) {
-		List<Float> babyCromossomes = new ArrayList<Float>();
+		List<Float> babyGenes = new ArrayList<Float>();
 
 		for (int i = 0; i < father.getGenes().length; i++) {
 			if (RandomUtil.nextBoolean()) {
-				babyCromossomes.add(father.getGenes()[i]);
+				babyGenes.add(father.getGenes()[i]);
 			} else {
-				babyCromossomes.add(mother.getGenes()[i]);
+				babyGenes.add(mother.getGenes()[i]);
 			}
 		}
 
-		return new Genome(0, babyCromossomes.toArray(new Float[babyCromossomes.size()]));
+		return new Genome(0, babyGenes.toArray(new Float[babyGenes.size()]));
 	}
 
 	/**

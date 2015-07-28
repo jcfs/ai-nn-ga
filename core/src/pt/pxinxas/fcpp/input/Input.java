@@ -75,9 +75,13 @@ public class Input implements Serializable {
 			rightKeyDown = false;
 		}
 		
-		this.angle = 270.0d;
+		this.angle = scale(inputs.get(4), 0, 1, 0, 360);
 
 	}
+	
+	public static double scale(final double valueIn, final double baseMin, final double baseMax, final double limitMin, final double limitMax) {
+        return ((limitMax - limitMin) * (valueIn - baseMin) / (baseMax - baseMin)) + limitMin;
+    }
 
 	public boolean isLeftKeyDown() {
 		return leftKeyDown;

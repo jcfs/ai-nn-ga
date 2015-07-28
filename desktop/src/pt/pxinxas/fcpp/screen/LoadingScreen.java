@@ -42,12 +42,10 @@ public class LoadingScreen implements Screen {
 
 	@Override
 	public void hide() {
-		// spriteBatch.dispose();
 	}
 
 	@Override
 	public void dispose() {
-		// spriteBatch.dispose();
 	}
 
 }

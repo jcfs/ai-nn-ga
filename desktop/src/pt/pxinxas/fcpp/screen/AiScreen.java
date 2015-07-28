@@ -31,7 +31,7 @@ public class AiScreen implements Screen {
 	private boolean populationAlive = false;
 	private int done;
 
-	private final GeneticAlgorithm geneticAlgorithm = new GeneticAlgorithm(POPULATION_SIZE, 704);
+	private final GeneticAlgorithm geneticAlgorithm = new GeneticAlgorithm(POPULATION_SIZE, 645);
 	private final List<Agent> activePopulation = new ArrayList<Agent>();
 	private float generationTimer = 0;
 
@@ -109,7 +109,7 @@ public class AiScreen implements Screen {
 					double targetDistance = -(position.getDistance((float) targetPoint.x - (float) position.x, (float) targetPoint.y
 							- (float) position.y));
 					float fitness = (float) targetDistance * 0.99f - agent.getTimer() * 0.01f;
-					agent.getGenome().setFitness(fitness - agent.getBlockCollision());
+					agent.getGenome().setFitness(fitness);
 					agent.remove();
 				}
 

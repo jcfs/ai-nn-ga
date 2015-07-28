@@ -8,6 +8,7 @@ import java.util.List;
  * @author jcfs
  */
 public class NeuralNetwork {
+
 	private final List<List<Neuron>> hiddenLayers;
 	private final List<Neuron> outputLayer;
 
@@ -18,7 +19,11 @@ public class NeuralNetwork {
 		for (int i = 0; i < numberOfHiddenLayers; i++) {
 			ArrayList<Neuron> neurons = new ArrayList<Neuron>();
 			for (int j = 0; j < numberOfNeuronsPerHiddenLayer; j++) {
-				neurons.add(new Neuron(numberOfInputs + 1));
+				if (i == 0) {
+					neurons.add(new Neuron(numberOfInputs + 1));
+				} else {
+					neurons.add(new Neuron(numberOfNeuronsPerHiddenLayer + 1));
+				}
 			}
 			this.hiddenLayers.add(neurons);
 		}
@@ -33,7 +38,7 @@ public class NeuralNetwork {
 	}
 
 	/**
-	 * Neural network update method - only supports one hidden layer so far
+	 * Neural network update method
 	 *
 	 * @param inputs
 	 * @return
@@ -43,6 +48,12 @@ public class NeuralNetwork {
 		return evaluateOutputLayer(hiddenLayerOutput);
 	}
 
+	/**
+	 * Neural network update method
+	 * 
+	 * @param inputs
+	 * @return
+	 */
 	public List<Float> update(Float... inputs) {
 		List<Float> inputList = Arrays.asList(inputs);
 		return update(inputList);
@@ -102,18 +113,29 @@ public class NeuralNetwork {
 	}
 
 	/**
+	 * @return
+	 */
+	public Integer getWeightCount() {
+		List<Float> exportWeights = exportWeights();
+		return exportWeights != null ? exportWeights.size() : null;
+	}
+
+	/**
 	 * Network evaluate for the hidden layers for the given input
 	 *
 	 * @param inputs
 	 * @return
 	 */
 	private List<Float> evaluateHiddenLayers(List<Float> inputs) {
+		List<Float> hiddenLayerInput = inputs;
 		List<Float> hiddenLayerOutput = new ArrayList<Float>();
+
 		for (int i = 0; i < hiddenLayers.size(); i++) {
 			List<Neuron> layer = hiddenLayers.get(i);
 			for (Neuron neuron : layer) {
-				hiddenLayerOutput.add(neuron.evaluate(inputs.toArray(new Float[inputs.size()])));
+				hiddenLayerOutput.add(neuron.evaluate(hiddenLayerInput.toArray(new Float[inputs.size()])));
 			}
+			hiddenLayerInput = hiddenLayerOutput;
 		}
 		return hiddenLayerOutput;
 	}
@@ -156,18 +178,4 @@ public class NeuralNetwork {
 		return s + "\n]";
 	}
 
-	public static void main(String[] args) {
-		NeuralNetwork neuralNetwork = new NeuralNetwork(2, 2, 1, 10);
-		NeuralNetwork neuralNetwork2 = new NeuralNetwork(2, 2, 1, 10);
-		List<Float> input = new ArrayList<Float>();
-		input.add(0f);
-		input.add(-1f);
-		List<Float> outputs = neuralNetwork.update(input);
-		System.out.println(outputs);
-
-		List<Float> exportWeights = neuralNetwork.exportWeights();
-		System.out.println(neuralNetwork.toString());
-		neuralNetwork2.importWeights(exportWeights.toArray(new Float[exportWeights.size()]));
-		System.out.println(neuralNetwork2.toString());
-	}
 }
