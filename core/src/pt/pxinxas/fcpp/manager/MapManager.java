@@ -30,7 +30,7 @@ public class MapManager {
 	private final Map<Integer, GameMap> gameMaps = new HashMap<Integer, GameMap>();
 
 	private MapManager() {
-		File fXmlFile = new File("maps/maps.xml");
+		File fXmlFile = new File("../core/assets/maps/maps.xml");
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder dBuilder;
 		try {
